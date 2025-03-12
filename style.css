@@ -1,0 +1,281 @@
+/* 🔥 Reset & Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* 🎵 Background (Dark Mode) */
+body {
+  background: #121212;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px 0; /* Added top and bottom gap */
+}
+
+/* 🎧 Music Player Container */
+.player {
+  width: 400px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 30px 0; /* Added top and bottom margin */
+}
+
+.album-art {
+  margin-top: 90px;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: black;
+  box-shadow: 0px 5px 15px rgba(255, 0, 30, 0.5);
+  margin: 0 auto 15px auto;
+}
+
+/* 🎵 Album Art Image */
+.album-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+/* 🎶 Hover Effect */
+.album-art img:hover {
+  transform: scale(1.35);
+}
+
+/* 🔄 Rotation Effect */
+.album-art.rotate {
+  animation: rotate 10s linear infinite;
+}
+
+/* 🎥 Keyframes for Rotation */
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 🎼 Song Title */
+#song-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* 📊 Progress Bar */
+.progress-container {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 5px;
+  background: rgba(255, 0, 30, 0.5);
+  transition: width 0.5s;
+}
+#progress-container {
+  width: 100%;
+  height: 8px;
+  background: #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  margin-top: 10px;
+}
+
+#progress-bar {
+  width: 0%;
+  height: 100%;
+  background: #ff5733;
+  border-radius: 5px;
+}
+
+/* ⏯️ Control Buttons */
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.btn {
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  border: none;
+  background: transparent;
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px rgba(255, 0, 30, 0.8);
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn:hover {
+  box-shadow: 0px 0px 15px rgba(255, 0, 30, 1);
+  transform: scale(1.1);
+}
+
+.btn span {
+  text-shadow: 0px 0px 8px rgba(255, 0, 30, 0.8);
+}
+
+
+.controls button {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  padding: 15px;
+  font-size: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0px 5px 15px rgba(255, 0, 30, 0.5);
+}
+
+.controls button:hover {
+  background:rgba(255, 0, 30, 0.5);
+  transform: scale(1.1);
+}
+
+.controls button:active {
+  transform: scale(0.9);
+}
+
+/* 🔊 Volume Control */
+.volume-slider {
+  width: 100%;
+  margin-top: 15px;
+  background: transparent;
+}
+
+.volume-slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  background: #ff0066;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* 🔥 Additional Neon Glow */
+.glow-effect {
+  text-shadow: 0px 0px 5px rgba(255, 0, 102, 0.8);
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 450px) {
+  .player {
+      width: 90%;
+  }
+}
+
+/* 🔥 Random Extra Styles */
+.shadow-effect { box-shadow: 0px 10px 25px rgba(255, 0, 102, 0.5); }
+.rounded { border-radius: 50px; }
+.hidden { display: none; }
+.opacity-low { opacity: 0.5; }
+.opacity-full { opacity: 1; }
+.transition-slow { transition: all 0.5s ease; }
+.transition-fast { transition: all 0.2s ease-in-out; }
+
+/* 🎵 Animation Effects */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* 🔥 Glow Effects */
+.glow-red { text-shadow: 0px 0px 10px red; }
+.glow-blue { text-shadow: 0px 0px 10px blue; }
+.glow-green { text-shadow: 0px 0px 10px green; }
+.glow-yellow { text-shadow: 0px 0px 10px yellow; }
+.glow-cyan { text-shadow: 0px 0px 10px cyan; }
+.glow-purple { text-shadow: 0px 0px 10px purple; }
+
+/* 🎨 More Styling */
+.text-large { font-size: 24px; font-weight: bold; }
+.text-medium { font-size: 18px; }
+.text-small { font-size: 14px; }
+.text-bold { font-weight: bold; }
+.text-italic { font-style: italic; }
+.text-center { text-align: center; }
+
+/* 🔄 Additional Buttons */
+.button-secondary {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 12px 20px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.button-secondary:hover {
+  background: #ff0066;
+}
+
+/* 🖥️ Container Styles */
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-space {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 🎭 Random Extra */
+.dark-mode { background: black; color: white; }
+.light-mode { background: white; color: black; }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="player">
+        <h2 style="margin-bottom: 20px;">Music Player</h2>
+        <div class="album-art" style="background: url('images/a1.jpg'); background-size: contain;">
+          <img id="song-image" src="default.jpg" alt="Album Art">
+      </div>      
+        <audio id="audio-player">
+            <source src="music/lovely.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <div class="controls">
+            <button class="btn prev"><span>&#9665;</span></button>  <!-- ◄ -->
+            <button class="btn play"><span>&#9654;</span></button>  <!-- ► -->
+            <button class="btn pause"><span>&#10074;&#10074;</span></button>  <!-- ⏸ -->
+            <button class="btn next"><span>&#9655;</span></button>  <!-- ► -->
+        </div>
+        
+        <p id="song-title">Now Playing: lovely.mp3</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

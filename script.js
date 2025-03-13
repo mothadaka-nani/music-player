@@ -10,14 +10,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const forwardBtn = document.getElementById("forward");
     const backwardBtn = document.getElementById("backward");
 
-    // Song List Object
+    function updateBackground(imageSrc) {
+        document.body.style.background = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${imageSrc}') center center / contain repeat fixed`;
+    }  
+    // 🎵 Song List
     const songs = [
         { title: "Lovely", src: "music/lovely.mp3", image: "images/a1.jpg" },
         { title: "Blinding Lights", src: "music/Blinding_Lights.mp3", image: "images/bhag.jpeg" },
         { title: "Bones - Imagine Dragons", src: "music/Bones.mp3", image: "images/a3.jpg" }
     ];
 
-    // Get last played song index from localStorage (default to 0 if not found)
     let songIndex = parseInt(localStorage.getItem("lastSongIndex")) || 0;
     let isPlaying = false;
     let audio = new Audio(songs[songIndex].src);
@@ -29,18 +31,21 @@ document.addEventListener("DOMContentLoaded", () => {
         albumArt.src = song.image;
         audio.src = song.src;
 
+        // 🌟 Update background image dynamically
+        updateBackground(song.image);
+
         if (isPlaying) {
             audio.play();
-            restartRotation(); // Restart rotation when a new song loads
+            restartRotation();
         }
 
-        // Save current song index to localStorage
+        // Save current song index
         localStorage.setItem("lastSongIndex", index);
     }
 
-    // 🔄 Restart Rotation
+    // 🔄 Restart Album Rotation
     function restartRotation() {
-        albumArt.style.animation = "none"; // Reset animation
+        albumArt.style.animation = "none";
         setTimeout(() => {
             albumArt.style.animation = "rotate 10s linear infinite";
         }, 10);
@@ -50,13 +55,13 @@ document.addEventListener("DOMContentLoaded", () => {
     playPauseBtn.addEventListener("click", () => {
         if (isPlaying) {
             audio.pause();
-            playPauseIcon.innerText = "▶️"; // Change to play icon
-            albumArt.style.animationPlayState = "paused"; // Pause rotation
+            playPauseIcon.innerText = "▶";
+            albumArt.style.animationPlayState = "paused";
         } else {
             audio.play();
-            playPauseIcon.innerText = "⏸️"; // Change to pause icon
-            albumArt.style.animationPlayState = "running"; // Resume rotation
-            restartRotation(); // Restart rotation when resuming play
+            playPauseIcon.innerText = "⏸";
+            albumArt.style.animationPlayState = "running";
+            restartRotation();
         }
         isPlaying = !isPlaying;
     });
@@ -74,17 +79,16 @@ document.addEventListener("DOMContentLoaded", () => {
         audio.currentTime = (clickX / width) * audio.duration;
     });
 
-    // 🎵 Reset Play Button When Song Ends
+    // 🎵 When Song Ends, Play Next
     audio.addEventListener("ended", () => {
         playPauseIcon.innerText = "▶️";
-        albumArt.style.animationPlayState = "paused"; // Stop rotation
+        albumArt.style.animationPlayState = "paused";
         isPlaying = false;
         nextSong();
     });
 
     // ⏭️ Next Song
     nextBtn.addEventListener("click", nextSong);
-
     function nextSong() {
         songIndex = (songIndex + 1) % songs.length;
         loadSong(songIndex);
@@ -95,7 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ⏮️ Previous Song
     prevBtn.addEventListener("click", prevSong);
-
     function prevSong() {
         songIndex = (songIndex - 1 + songs.length) % songs.length;
         loadSong(songIndex);
@@ -104,16 +107,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // ⏩ 10 Seconds Forward
+    // ⏩ Forward 10 Seconds
     forwardBtn.addEventListener("click", () => {
         audio.currentTime += 10;
     });
 
-    // ⏪ 10 Seconds Backward
+    // ⏪ Backward 10 Seconds
     backwardBtn.addEventListener("click", () => {
         audio.currentTime -= 10;
     });
 
-    // Load the last played song when the page is refreshed
+    // 🌟 Load last played song on refresh
     loadSong(songIndex);
 });

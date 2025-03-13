@@ -11,9 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const backwardBtn = document.getElementById("backward");
 
     function updateBackground(imageSrc) {
-        document.body.style.background = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${imageSrc}') center center / contain repeat fixed`;
+        document.body.style.background = `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('${imageSrc}') center center / contain repeat fixed`;
     }  
-    // 🎵 Song List
+    
     const songs = [
         { title: "Lovely", src: "music/lovely.mp3", image: "images/a1.jpg" },
         { title: "Blinding Lights", src: "music/Blinding_Lights.mp3", image: "images/bhag.jpeg" },
@@ -24,26 +24,20 @@ document.addEventListener("DOMContentLoaded", () => {
     let isPlaying = false;
     let audio = new Audio(songs[songIndex].src);
 
-    // 🎵 Load Song Details
     function loadSong(index) {
         const song = songs[index];
         songTitle.innerText = song.title;
         albumArt.src = song.image;
         audio.src = song.src;
-
-        // 🌟 Update background image dynamically
         updateBackground(song.image);
 
         if (isPlaying) {
             audio.play();
             restartRotation();
         }
-
-        // Save current song index
         localStorage.setItem("lastSongIndex", index);
     }
 
-    // 🔄 Restart Album Rotation
     function restartRotation() {
         albumArt.style.animation = "none";
         setTimeout(() => {
@@ -51,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 10);
     }
 
-    // 🎵 Play/Pause Toggle
     playPauseBtn.addEventListener("click", () => {
         if (isPlaying) {
             audio.pause();
@@ -66,20 +59,17 @@ document.addEventListener("DOMContentLoaded", () => {
         isPlaying = !isPlaying;
     });
 
-    // 🎼 Update Progress Bar
     audio.addEventListener("timeupdate", () => {
         const progress = (audio.currentTime / audio.duration) * 100;
         progressBar.style.width = `${progress}%`;
     });
 
-    // 📍 Seek in Song
     progressContainer.addEventListener("click", (e) => {
         const clickX = e.offsetX;
         const width = progressContainer.clientWidth;
         audio.currentTime = (clickX / width) * audio.duration;
     });
 
-    // 🎵 When Song Ends, Play Next
     audio.addEventListener("ended", () => {
         playPauseIcon.innerText = "▶️";
         albumArt.style.animationPlayState = "paused";
@@ -87,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
         nextSong();
     });
 
-    // ⏭️ Next Song
     nextBtn.addEventListener("click", nextSong);
     function nextSong() {
         songIndex = (songIndex + 1) % songs.length;
@@ -97,7 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // ⏮️ Previous Song
     prevBtn.addEventListener("click", prevSong);
     function prevSong() {
         songIndex = (songIndex - 1 + songs.length) % songs.length;
@@ -107,16 +95,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // ⏩ Forward 10 Seconds
     forwardBtn.addEventListener("click", () => {
         audio.currentTime += 10;
     });
 
-    // ⏪ Backward 10 Seconds
     backwardBtn.addEventListener("click", () => {
         audio.currentTime -= 10;
     });
 
-    // 🌟 Load last played song on refresh
     loadSong(songIndex);
 });

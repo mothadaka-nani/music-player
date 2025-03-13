@@ -1,13 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const audio = document.getElementById("audio-player");
-    const playButton = document.querySelector(".play");
-    const pauseButton = document.querySelector(".pause");
-    const prevButton = document.querySelector(".prev");
-    const nextButton = document.querySelector(".next");
+    const playPauseBtn = document.getElementById("play-pause");
+    const playPauseIcon = document.getElementById("play-pause-icon");
+    const albumArt = document.querySelector(".album-art img");
     const songTitle = document.getElementById("song-title");
-    const songImage = document.getElementById("song-image");
-    const albumArt = document.querySelector(".album-art");
+    const progressBar = document.getElementById("progress-bar");
+    const progressContainer = document.getElementById("progress-container");
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+    const forwardBtn = document.getElementById("forward");
+    const backwardBtn = document.getElementById("backward");
 
+    // Song List Object
     const songs = [
         { title: "Lovely", src: "music/lovely.mp3", image: "images/a1.jpg" },
         { title: "Blinding Lights", src: "music/Blinding_Lights.mp3", image: "images/bhag.jpeg" },
@@ -15,26 +18,27 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     // Get last played song index from localStorage (default to 0 if not found)
-    let currentSongIndex = parseInt(localStorage.getItem("lastSongIndex")) || 0;
+    let songIndex = parseInt(localStorage.getItem("lastSongIndex")) || 0;
+    let isPlaying = false;
+    let audio = new Audio(songs[songIndex].src);
 
+    // 🎵 Load Song Details
     function loadSong(index) {
-        audio.src = songs[index].src;
-        songTitle.textContent = `Now Playing: ${songs[index].title}`;
-        songImage.src = songs[index].image;
-        albumArt.style.background = `url('${songs[index].image}') center/cover no-repeat`;
+        const song = songs[index];
+        songTitle.innerText = song.title;
+        albumArt.src = song.image;
+        audio.src = song.src;
 
-        restartRotation(); // Restart rotation when a new song loads
-
-        audio.load();
-        audio.play()
-            .then(() => console.log("Playing:", songs[index].title))
-            .catch((error) => console.error("Error playing audio:", error));
+        if (isPlaying) {
+            audio.play();
+            restartRotation(); // Restart rotation when a new song loads
+        }
 
         // Save current song index to localStorage
         localStorage.setItem("lastSongIndex", index);
     }
 
-    // Function to restart rotation
+    // 🔄 Restart Rotation
     function restartRotation() {
         albumArt.style.animation = "none"; // Reset animation
         setTimeout(() => {
@@ -42,37 +46,74 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 10);
     }
 
-    // Play Button Event
-    playButton.addEventListener("click", () => {
-        if (audio.paused) {
+    // 🎵 Play/Pause Toggle
+    playPauseBtn.addEventListener("click", () => {
+        if (isPlaying) {
+            audio.pause();
+            playPauseIcon.innerText = "▶️"; // Change to play icon
+            albumArt.style.animationPlayState = "paused"; // Pause rotation
+        } else {
             audio.play();
+            playPauseIcon.innerText = "⏸️"; // Change to pause icon
+            albumArt.style.animationPlayState = "running"; // Resume rotation
             restartRotation(); // Restart rotation when resuming play
         }
+        isPlaying = !isPlaying;
     });
 
-    // Pause Button Event
-    pauseButton.addEventListener("click", () => {
-        audio.pause();
-        albumArt.style.animation = "none"; // Stop rotation on pause
+    // 🎼 Update Progress Bar
+    audio.addEventListener("timeupdate", () => {
+        const progress = (audio.currentTime / audio.duration) * 100;
+        progressBar.style.width = `${progress}%`;
     });
 
-    // Next Button Event
-    nextButton.addEventListener("click", () => {
-        currentSongIndex = (currentSongIndex + 1) % songs.length;
-        loadSong(currentSongIndex);
+    // 📍 Seek in Song
+    progressContainer.addEventListener("click", (e) => {
+        const clickX = e.offsetX;
+        const width = progressContainer.clientWidth;
+        audio.currentTime = (clickX / width) * audio.duration;
     });
 
-    // Previous Button Event
-    prevButton.addEventListener("click", () => {
-        currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-        loadSong(currentSongIndex);
-    });
-
-    // Automatically Play Next Song When Current One Ends
+    // 🎵 Reset Play Button When Song Ends
     audio.addEventListener("ended", () => {
-        nextButton.click();
+        playPauseIcon.innerText = "▶️";
+        albumArt.style.animationPlayState = "paused"; // Stop rotation
+        isPlaying = false;
+        nextSong();
+    });
+
+    // ⏭️ Next Song
+    nextBtn.addEventListener("click", nextSong);
+
+    function nextSong() {
+        songIndex = (songIndex + 1) % songs.length;
+        loadSong(songIndex);
+        if (isPlaying) {
+            audio.play();
+        }
+    }
+
+    // ⏮️ Previous Song
+    prevBtn.addEventListener("click", prevSong);
+
+    function prevSong() {
+        songIndex = (songIndex - 1 + songs.length) % songs.length;
+        loadSong(songIndex);
+        if (isPlaying) {
+            audio.play();
+        }
+    }
+
+    // ⏩ 10 Seconds Forward
+    forwardBtn.addEventListener("click", () => {
+        audio.currentTime += 10;
+    });
+
+    // ⏪ 10 Seconds Backward
+    backwardBtn.addEventListener("click", () => {
+        audio.currentTime -= 10;
     });
 
     // Load the last played song when the page is refreshed
-    loadSong(currentSongIndex);
+    loadSong(songIndex);
 });

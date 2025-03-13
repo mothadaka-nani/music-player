@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     audio.addEventListener("ended", () => {
-        playPauseIcon.innerText = "▶️";
+        playPauseIcon.innerText = "▶";
         albumArt.style.animationPlayState = "paused";
         isPlaying = false;
         nextSong();

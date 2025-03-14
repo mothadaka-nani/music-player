@@ -75,24 +75,24 @@ body {
   to { transform: rotate(360deg); }
 }
 
-/* 🎵 Progress Bar */
-.progress-container {
+/* Progress Bar Container */
+#progress-container {
   width: 100%;
   height: 5px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2); /* Light background for the container */
   border-radius: 10px;
   margin: 15px 0;
   overflow: hidden;
-  position: relative;
+  cursor: pointer; /* Indicates it's clickable */
 }
 
-.progress-bar {
-  width: 0%;
+/* Progress Bar */
+#progress-bar {
+  width: 0%; /* Starts at 0% */
   height: 100%;
-  background: rgba(255, 0, 30, 0.8);
-  transition: width 0.3s ease;
+  background: rgba(255, 0, 30, 0.8); /* Red progress bar */
+  transition: width 0.1s linear; /* Smooth transition for progress updates */
 }
-
 /* ⏯️ Control Buttons */
 .controls {
   display: flex;

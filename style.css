@@ -19,8 +19,9 @@ body {
 
 /* 🎧 Music Player Container */
 .player {
-  width: 90%;
-  max-width: 350px;
+  width: 75%; /* Cover 75% of the viewport width */
+  max-width: 800px; /* Increase max-width for larger screens */
+  height:75%;
   background: rgba(0, 0, 0, 0.9);
   padding: 25px;
   border-radius: 20px;
@@ -105,23 +106,26 @@ body {
 }
 
 .btn {
-  width: 50px;
-  height: 50px;
+  width: 50px; /* Equal width and height */
+  height: 50px; /* Equal width and height */
   border: none;
   background: rgba(255, 0, 30, 0.2);
   color: white;
-  border-radius: 50%;
+  border-radius: 50%; /* Perfect circle */
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0px 5px 15px rgba(255, 0, 30, 0.3);
+  padding: 0; /* Remove padding to ensure perfect circle */
 }
 
 .btn.small-btn {
-  width: 35px;
-  height: 35px;
+  width: 35px; /* Equal width and height */
+  height: 35px; /* Equal width and height */
+  border-radius: 50%; /* Perfect circle */
+  padding: 0; /* Remove padding to ensure perfect circle */
 }
 
 .btn:hover {
@@ -179,11 +183,10 @@ body {
 }
 
 /* 📱 Responsive Design */
-/* 📱 Mobile-specific playlist sidebar */
 @media (max-width: 450px) {
   .player {
-    width: 95%;
-    max-width: 300px;
+    width: 95%; /* Reset width for mobile */
+    max-width: 300px; /* Reset max-width for mobile */
     padding: 15px;
     position: relative;
   }
@@ -198,7 +201,7 @@ body {
     height: 50px;
   }
 
-  /* ✅ Adjust playlist position below player */
+  /* Mobile-specific playlist sidebar */
   #playlist-sidebar {
     position: relative; /* Allow natural flow */
     width: 100%;
